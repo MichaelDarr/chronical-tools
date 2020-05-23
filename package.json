@@ -1,5 +1,5 @@
 {
-  "name": "chronicle-tools",
+  "name": "chronicle-app",
   "version": "0.0.1",
   "description": "",
   "main": "src/index.tsx",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MichaelDarr/chronicle-tools.git"
+    "url": "git+https://github.com/MichaelDarr/chronicle-app.git"
   },
   "author": "Michael Darr",
   "license": "GPL3",
   "bugs": {
-    "url": "https://github.com/MichaelDarr/chronicle-tools/issues"
+    "url": "https://github.com/MichaelDarr/chronicle-app/issues"
   },
-  "homepage": "https://github.com/MichaelDarr/chronicle-tools#readme",
+  "homepage": "https://github.com/MichaelDarr/chronicle-app#readme",
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
