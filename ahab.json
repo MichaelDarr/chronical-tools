@@ -2,10 +2,7 @@
     "ahab": "0.5",
     "image": "node:12.16-buster",
     "init": [
-        "npm i"
-    ],
-    "options": [
-        "--network", "host"
+        "npm install"
     ],
     "volumes": [
         "./:/home/ahab/chronicle"
