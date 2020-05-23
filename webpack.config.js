@@ -2,11 +2,10 @@
 const path = require('path');
 
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    mode: 'development',
+    mode: process.env.NODE_ENV || 'development',
     entry: {
         bundle: [
             path.resolve(__dirname, 'src/index.tsx')
@@ -76,15 +75,10 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'public/robots.txt'),
-                    to: path.resolve(__dirname, 'dist/robots.txt'),
+                    from: path.resolve(__dirname, 'public'),
+                    to: path.resolve(__dirname, 'dist'),
                 }
             ],
-        }),
-        new HtmlWebpackPlugin({
-            favicon: path.resolve(__dirname, 'public/favicon.png'),
-            filename: path.resolve(__dirname, 'dist/index.html'),
-            template: path.resolve(__dirname, 'public/index.html'),
         }),
     ],
 };
