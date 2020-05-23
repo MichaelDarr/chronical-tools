@@ -1,0 +1,24 @@
+.topbar {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
+
+    a {
+        border-bottom: 1px solid $color-nav-link-underline;
+        color: $color-nav-link;
+        font-size: 1.3rem;
+        margin: 0 3rem 0.6rem 3rem;
+        padding-bottom: 0.4rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: ease 0.1s;
+
+        &.active,
+        &:hover {
+            border-bottom: 1px solid $color-nav-link-active;
+            color: $color-nav-link-active;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.2rem;
+        }
+    }
+}
