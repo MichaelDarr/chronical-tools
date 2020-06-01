@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+    backend:
+        build:
+            context: ./backend
+        depends_on:
+            - "postgres"
+        ports:
+            - "8088:8088"
+        volumes:
+            - "./backend/:/mnt"
+        working_dir: /mnt
+        environment:
+            POSTGRES_URL: postgres://postgres:pass@postgres:5432/pg
+            PORT: 8088
+    frontend:
+        build:
+            context: ./frontend
+        depends_on:
+            - "backend"
+        ports:
+            - "8080:8080"
+        volumes:
+            - "./frontend:/mnt"
+        working_dir: /mnt
+    postgres:
+        image: postgres
+        ports:
+            - "5432:5432"
+        volumes:
+            - pg_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: pg
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: pass
+volumes:
+    pg_data:
+        
