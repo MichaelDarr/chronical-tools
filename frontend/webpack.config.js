@@ -1,20 +1,28 @@
 /* eslint-disable */
+const exec = require('child_process').exec;
 const path = require('path');
 
 const CopyPlugin = require('copy-webpack-plugin');
+const ExtraWatchWebpackPlugin = require('extra-watch-webpack-plugin')
 const webpack = require('webpack');
+
+const distPath = path.resolve(__dirname, 'dist');
+const publicPath = path.resolve(__dirname, 'public');
+const srcPath = path.resolve(__dirname, 'src');
+const goPath = path.resolve(srcPath, 'go');
+const wasmGlueJSFilepath = '/usr/local/go/misc/wasm/wasm_exec.js';
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
     entry: {
         bundle: [
-            path.resolve(__dirname, 'src/index.tsx')
+            path.resolve(srcPath, 'index.tsx')
         ],
     },
     context: __dirname,
     devServer: {
         compress: true,
-        contentBase: path.resolve(__dirname, 'dist'),
+        contentBase: distPath,
         historyApiFallback: true,
         host: '0.0.0.0',
         hot: true,
@@ -44,7 +52,7 @@ module.exports = {
                             prependData: '@use "variables.scss" as *;\n',
                             sassOptions: {
                                 includePaths: [
-                                    path.resolve(__dirname, 'src'),
+                                    srcPath,
                                 ],
                             },
                         },
@@ -67,18 +75,40 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: path.resolve(__dirname, 'public'),
+        path: distPath,
+        publicPath: '/',
     },
     target: 'web',
     plugins: [
         new CopyPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'public'),
-                    to: path.resolve(__dirname, 'dist'),
+                    from: publicPath,
+                    to: distPath,
+                }, {
+                    from: wasmGlueJSFilepath,
+                    to: distPath,
                 }
             ],
         }),
+        new ExtraWatchWebpackPlugin({
+            files: [
+                path.resolve(goPath, '**/*.go'),
+            ],
+        }),
+        {
+            apply: (compiler) => {
+                compiler.hooks.done.tap('compileWASM', (compilation) => {
+                    exec(
+                        `GOOS=js GOARCH=wasm go build -o ${path.resolve(distPath, 'main.wasm')}`,
+                        { cwd: goPath },
+                        (err, stdout, stderr) => {
+                            if (stdout) process.stdout.write(stdout);
+                            if (stderr) process.stderr.write(stderr);
+                        }
+                    );
+                });
+            }
+        },
     ],
 };

@@ -1,5 +1,10 @@
 FROM node:12.16-buster
 
+RUN wget https://golang.org/dl/go1.14.4.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go1.14.4.linux-amd64.tar.gz \
+    && rm go1.14.4.linux-amd64.tar.gz
+ENV PATH $PATH:/usr/local/go/bin
+
 # bake entrypoint into the image
 COPY entrypoint.sh /usr/local/bin/
 

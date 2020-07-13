@@ -1,0 +1,29 @@
+.fight-button-container {
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 10em 0;
+    margin-top: 3em;
+
+    .fight-button {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 4em;
+        letter-spacing: 0.1em;
+        border-radius: 1em;
+        color: $color-fight-link-text;
+        padding: 1em;
+        transition: all 0.2s;
+        box-shadow: .1em .1em .2em $color-fight-link-grad-end;
+        cursor: pointer;
+        background: linear-gradient(225deg, $color-fight-link-grad-start, $color-fight-link-grad-end);
+    }
+
+    .fight-button:hover {
+        padding: 1.2em;
+        font-size: 4.5em;
+        border-radius: 1.1em;
+        box-shadow: .2em .2em .4em $color-fight-link-grad-end;
+    }
+    
+}
