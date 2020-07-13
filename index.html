@@ -10,10 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cinzel+Decorative:wght@700&family=Libre+Baskerville&display=swap" rel="stylesheet">
     <title>Chronicle</title>
     <link rel="icon" href="./favicon.png">
+    <script src="wasm_exec.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script src="./bundle.js"></script>
+    <script>
+			const go = new Go();
+			WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+        go.run(result.instance);
+        const bundleScript = document.createElement('script');
+        bundleScript.src = './bundle.js';
+        document.head.appendChild(bundleScript);
+			});
+		</script>
   </body>
 </html>
