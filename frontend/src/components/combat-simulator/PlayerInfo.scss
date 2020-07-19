@@ -1,0 +1,18 @@
+.player-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .player-info-input {
+        display: flex;
+        flex-direction: column;
+        font-weight: 800;
+        padding: 1em 0 1em;
+        text-align: left;
+        text-transform: capitalize;
+    }
+}
