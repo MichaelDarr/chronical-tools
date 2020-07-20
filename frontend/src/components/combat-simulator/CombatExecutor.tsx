@@ -1,16 +1,12 @@
 import React, { FC, useState } from 'react';
 
-import { PlayerStats } from './PlayerInfo';
+import { Player } from './PlayerInfo';
 
 import './CombatExecutor.scss';
 
-export interface FullPlayerInfo extends PlayerStats {
-    name: string;
-}
-
 export interface PlayerInfoProps {
-    playerOne: FullPlayerInfo;
-    playerTwo: FullPlayerInfo;
+    playerOne: Player;
+    playerTwo: Player;
 }
 
 export const CombatExecutor: FC<PlayerInfoProps> = ({
@@ -22,18 +18,19 @@ export const CombatExecutor: FC<PlayerInfoProps> = ({
     const fight = () => {
         setCombatLog([]);
         Fight(playerOne, playerTwo, (logStr: string): void => {
-            console.log(logStr)
             setCombatLog(oldArray => [...oldArray, logStr]);
         });
     }
 
     return (
         <div className='combat-executor'>
-            <input
-                type='button'
-                value='Fight!'
-                onClick={fight}
-            />
+            <div className='fight-button-container'>
+                <input
+                    type='button'
+                    value='Fight!'
+                    onClick={fight}
+                />
+            </div>
             <div className='combat-log'>
                 {combatLog.map((message, idx) => (
                     <p

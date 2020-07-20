@@ -94,6 +94,8 @@ func (player *Player) KeepRoll(die *die.Die, rollCount int) (int, error) {
 
 // Fight pits two players against each other to the death.
 func Fight(playerOne *Player, playerTwo *Player, logger Logger) (updatedPlayerOne *Player, updatedPlayerTwo *Player, data *FightData, err error) {
+	fmt.Println(playerOne)
+	fmt.Println(playerTwo)
 	updatedPlayerOne = playerOne.Clone()
 	updatedPlayerTwo = playerTwo.Clone()
 	data = &FightData{

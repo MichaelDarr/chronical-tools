@@ -1,24 +1,25 @@
 import React, { FC } from 'react';
 
+import { NumericInput } from '../ui/input/NumericInput';
+
 import './PlayerInfo.scss';
 
-export interface PlayerStats {
+export interface Player {
     damage: number;
     defense: number;
     dodge: number;
     health: number;
     hit: number;
     keep: number;
+    name: string;
 }
 
 export interface PlayerInfoProps {
-    name: string;
-    stats: PlayerStats;
-    setStats: (stats: PlayerStats) => void;
+    stats: Player;
+    setStats: (stats: Player) => void;
 }
 
 export const PlayerInfo: FC<PlayerInfoProps> = ({
-    name,
     stats,
     setStats,
 }) => {
@@ -27,26 +28,42 @@ export const PlayerInfo: FC<PlayerInfoProps> = ({
             ...stats,
             [e.target.name]: e.target.valueAsNumber,
         })
-    }
+    };
 
     return (
         <div className='player-info'>
-            <h2>{name}</h2>
-            {Object.entries(stats).map(([key, val]) => (
-                <label
-                    className='player-info-input'
-                    key={key}
-                >
-                    {key}:
-                    <br />
-                    <input
-                        name={key}
-                        type='number'
-                        value={val}
-                        onChange={handleChange}
-                    />
-                </label>
-            ))}
+            <h2>{stats.name}</h2>
+
+            <NumericInput
+                label="damage"
+                value={stats.damage}
+                onInputChange={handleChange}
+            />
+            <NumericInput
+                label="defense"
+                value={stats.defense}
+                onInputChange={handleChange}
+            />
+            <NumericInput
+                label="dodge"
+                value={stats.dodge}
+                onInputChange={handleChange}
+            />
+            <NumericInput
+                label="health"
+                value={stats.health}
+                onInputChange={handleChange}
+            />
+            <NumericInput
+                label="hit"
+                value={stats.hit}
+                onInputChange={handleChange}
+            />
+            <NumericInput
+                label="keep"
+                value={stats.keep}
+                onInputChange={handleChange}
+            />
         </div>
     );
 };
