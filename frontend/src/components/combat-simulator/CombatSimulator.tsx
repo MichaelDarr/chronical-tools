@@ -13,7 +13,7 @@ export const CombatSimulator: FC = () => {
         health: 60,
         hit: 10,
         keep: 0,
-    }
+    };
 
     const [playerOne, setPlayerOne] = useState<PlayerStats>(initialPlayerStats);
     const [playerTwo, setPlayerTwo] = useState<PlayerStats>(initialPlayerStats);
@@ -26,8 +26,14 @@ export const CombatSimulator: FC = () => {
                 setStats={setPlayerOne}
             />
             <CombatExecutor
-                playerOne={playerOne}
-                playerTwo={playerTwo}
+                playerOne={{
+                    ...initialPlayerStats,
+                    name: 'Player One',
+                }}
+                playerTwo={{
+                    ...initialPlayerStats,
+                    name: 'Player Two',
+                }}
             />
             <PlayerInfo
                 name='Player Two'

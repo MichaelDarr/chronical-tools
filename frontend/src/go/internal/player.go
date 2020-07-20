@@ -3,7 +3,6 @@ package internal
 import (
 	"fmt"
 	"math"
-	"syscall/js"
 
 	"github.com/MichaelDarr/chronicle-app/frontend/src/go/pkg/die"
 )
@@ -20,6 +19,7 @@ type Player struct {
 	Health  int
 	Hit     int
 	Keep    int
+	Name    string
 }
 
 type AttackData struct {
@@ -93,7 +93,7 @@ func (player *Player) KeepRoll(die *die.Die, rollCount int) (int, error) {
 }
 
 // Fight pits two players against each other to the death.
-func Fight(playerOne *Player, playerTwo *Player) (updatedPlayerOne *Player, updatedPlayerTwo *Player, data *FightData, err error) {
+func Fight(playerOne *Player, playerTwo *Player, logger Logger) (updatedPlayerOne *Player, updatedPlayerTwo *Player, data *FightData, err error) {
 	updatedPlayerOne = playerOne.Clone()
 	updatedPlayerTwo = playerTwo.Clone()
 	data = &FightData{
@@ -115,6 +115,9 @@ func Fight(playerOne *Player, playerTwo *Player) (updatedPlayerOne *Player, upda
 		attacker.Dodges = append(attacker.Dodges, attackData.TotalDodge)
 		if !attackData.Dodged {
 			attacker.Hits = append(attacker.Hits, attackData.TotalDamage)
+			logger.Log(fmt.Sprint(attacker.Player.Name, " attack: ", attackData.TotalDamage, " (", target.Player.Name, " dodge ", attackData.TotalDodge, ")"))
+		} else {
+			logger.Log(fmt.Sprint(attacker.Player.Name, " attack: miss (", target.Player.Name, " dodge ", attackData.TotalDodge, ")"))
 		}
 		if !target.Player.IsAlive() {
 			attacker.Won = true
@@ -124,39 +127,4 @@ func Fight(playerOne *Player, playerTwo *Player) (updatedPlayerOne *Player, upda
 	data.Turns = attacker.Turns + target.Turns
 	data.Rounds = int(math.Ceil(float64(data.Turns) / 2))
 	return
-}
-
-func DemoFight(this js.Value, args []js.Value) interface{} {
-	playerOneName := args[0].String()
-	playerTwoName := args[1].String()
-	playerOne := &Player{
-		Damage:  12,
-		Defense: 1,
-		Dodge:   2,
-		Health:  59,
-		Hit:     10,
-		Keep:    0,
-	}
-
-	playerTwo := &Player{
-		Damage:  12,
-		Defense: 1,
-		Dodge:   2,
-		Health:  58,
-		Hit:     10,
-		Keep:    0,
-	}
-	playerOne, playerTwo, fightData, err := Fight(playerOne, playerTwo)
-	if err != nil {
-		fmt.Println("Error attacking player: ", err)
-	}
-	var winningPlayer string
-	if fightData.PlayerOneData.Won {
-		winningPlayer = playerOneName
-	}
-	if fightData.PlayerTwoData.Won {
-		winningPlayer = playerTwoName
-	}
-	fmt.Println(winningPlayer, "wins!")
-	return js.ValueOf(winningPlayer)
 }
