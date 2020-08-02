@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
 
+import { DropdownInput } from '../ui/input/DropdownInput';
 import { NumericInput } from '../ui/input/NumericInput';
+import { keepString } from '../../common/transform';
+import { Keep } from '../../common/types';
 
 import './PlayerInfo.scss';
 
@@ -23,11 +26,22 @@ export const PlayerInfo: FC<PlayerInfoProps> = ({
     stats,
     setStats,
 }) => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Generic stat change handler, only accepts non-negative stat changes
+    const handleStatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.valueAsNumber >= 0) {
+            setStats({
+                ...stats,
+                [e.target.name]: e.target.valueAsNumber,
+            });
+        }
+    };
+
+    // Keep stat change handler, needs different logic because it's a select instead of an input
+    const handleKeepChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setStats({
             ...stats,
-            [e.target.name]: e.target.valueAsNumber,
-        })
+            keep: parseInt(e.target.value),
+        });
     };
 
     return (
@@ -37,32 +51,34 @@ export const PlayerInfo: FC<PlayerInfoProps> = ({
             <NumericInput
                 label="damage"
                 value={stats.damage}
-                onInputChange={handleChange}
+                onInputChange={handleStatChange}
             />
             <NumericInput
                 label="defense"
                 value={stats.defense}
-                onInputChange={handleChange}
+                onInputChange={handleStatChange}
             />
             <NumericInput
                 label="dodge"
                 value={stats.dodge}
-                onInputChange={handleChange}
+                onInputChange={handleStatChange}
             />
             <NumericInput
                 label="health"
                 value={stats.health}
-                onInputChange={handleChange}
+                onInputChange={handleStatChange}
             />
             <NumericInput
                 label="hit"
                 value={stats.hit}
-                onInputChange={handleChange}
+                onInputChange={handleStatChange}
             />
-            <NumericInput
+            <DropdownInput
                 label="keep"
                 value={stats.keep}
-                onInputChange={handleChange}
+                options={[Keep.Low, Keep.Middle, Keep.High]}
+                optionTransformer={keepString}
+                onInputChange={handleKeepChange}
             />
         </div>
     );

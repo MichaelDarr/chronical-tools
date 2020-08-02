@@ -6,6 +6,31 @@ html, body {
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
+// 1920        1080
+
+// #CCBDDD
+// 234.5       312
+// 12.2%       29.0%
+
+// #A2D6BB
+// 1612.5      94.5
+// 84.0%       8.8%
+
+// #97DAF5
+// 1202.5      865.5
+// 62.6%       80.1%
+
+body {
+    min-height: 100%;
+    background: radial-gradient(farthest-side circle at top 8.8% left 84.0%, rgb(162, 214, 187) 0%, rgba(162, 214, 187, 0.4) 30%, transparent 100%),
+                radial-gradient(farthest-side circle at top 80.1% left 62.6%, rgb(151, 218, 245) 0%, rgba(151, 218, 245, 0.8) 40%, transparent 100%),
+                radial-gradient(farthest-side circle at top 29.0% left 12.2%, rgb(204, 189, 221) 0%, rgba(204, 189, 221, 0.3) 50%, transparent 100%);
+}
+
 h1 {
     font-family: 'Cinzel Decorative', cursive;
 }
