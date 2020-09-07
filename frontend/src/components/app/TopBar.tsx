@@ -6,11 +6,16 @@ import './TopBar.scss';
 export const TopBar: FC = () => (
     <div className='topbar'>
         <nav className='nav-items'>
-            <NavLink exact to='/'>
-                Home
+            <NavLink exact
+                to='/'
+                className='home-link'
+            >
+                Chronicle
             </NavLink>
+        </nav>
+        <nav className='nav-items'>
             <NavLink exact to='/about'>
-                About Us
+                About
             </NavLink>
             <NavLink exact to='/combat'>
                 Combat Simulator

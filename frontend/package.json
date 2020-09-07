@@ -23,7 +23,9 @@
   },
   "homepage": "https://michaeldarr.github.io/chronicle-app/",
   "dependencies": {
+    "@svgr/webpack": "^5.4.0",
     "extra-watch-webpack-plugin": "^1.0.3",
+    "file-loader": "^6.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0"

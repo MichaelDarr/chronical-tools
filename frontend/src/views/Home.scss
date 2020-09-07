@@ -1,0 +1,9 @@
+.container {
+    &.primary-header {
+        justify-content: left;
+    
+        svg {
+            height: 30em;
+        }
+    }
+}

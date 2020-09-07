@@ -63,6 +63,10 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'source-map-loader',
                 enforce: 'pre',
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack']
             }
         ],
     },

@@ -1,7 +1,11 @@
 .topbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin: 2rem 0 1rem 0;
+
+    .nav-items {
+        display: flex;
+    }
 
     a {
         border-bottom: 1px solid $color-nav-link-underline;
@@ -19,6 +23,16 @@
             color: $color-nav-link-active;
             margin-bottom: 0.8rem;
             padding-bottom: 0.2rem;
+        }
+
+        &.home-link {
+            font-family: "Cinzel Decorative", cursive;
+            font-weight: 600;
+            font-size: 1.4rem;
+
+            &.active {
+                display: none;
+            }
         }
     }
 }
